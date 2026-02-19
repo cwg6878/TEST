@@ -1,435 +1,299 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>청명 사주풀이</title>
-
+<title>냉장고 레시피 추천</title>
 <style>
-:root{
-    --ink:#1b1a17;
-    --paper:#f6f1e7;
-    --mid:#c8b79b;
-    --accent:#a14c2d;
-    --accent-2:#2f6b6a;
-    --deep:#0f1b2b;
+:root {
+  --bg: #fbf7ef;
+  --card: #fffdf8;
+  --ink: #262018;
+  --muted: #6a5b47;
+  --line: #e5d9c7;
+  --accent: #c75b2f;
+  --accent-soft: #f2dfd3;
+  --ok: #2a7f62;
 }
-*{ box-sizing:border-box; }
-
-body{
-    margin:0;
-    min-height:100vh;
-    background:
-        radial-gradient(1200px 600px at 10% 10%, rgba(255,248,220,.6), transparent 60%),
-        radial-gradient(900px 500px at 90% 20%, rgba(207,233,232,.45), transparent 60%),
-        linear-gradient(160deg, #f7f2e8 0%, #eee3cf 55%, #e5dccb 100%);
-    color:var(--ink);
-    font-family:"Nanum Myeongjo","Noto Serif KR","Gowun Batang",serif;
-    padding:28px;
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 10%, #fff6db 0%, transparent 40%),
+    radial-gradient(circle at 85% 20%, #f6ead7 0%, transparent 45%),
+    linear-gradient(160deg, #fbf7ef 0%, #f2e8d9 100%);
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  padding: 24px;
 }
-
-.shell{
-    width:min(1100px, 100%);
-    margin:0 auto;
-    display:grid;
-    gap:22px;
+.wrap {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
 }
-
-.hero{
-    background:
-        linear-gradient(140deg, rgba(15,27,43,.92), rgba(31,55,72,.92)),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 100 100'%3E%3Cpath d='M0 50h100M50 0v100' stroke='%232a3f52' stroke-width='0.6'/%3E%3C/svg%3E");
-    color:#f7f0e6;
-    border-radius:24px;
-    padding:28px 26px;
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 20px 40px rgba(19,27,36,.25);
+.hero {
+  background: linear-gradient(130deg, #2d3d45, #3e565f);
+  color: #fff;
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: 0 16px 35px rgba(30, 32, 33, .2);
 }
-
-.hero::after{
-    content:"";
-    position:absolute;
-    inset:-40%;
-    background:
-        radial-gradient(closest-side, rgba(255,223,171,.2), transparent 70%);
-    transform:translate(40%, -10%);
-    pointer-events:none;
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
 }
-
-.hero h1{
-    font-size:30px;
-    letter-spacing:2px;
-    margin:0 0 6px 0;
+.hero p {
+  margin: 0;
+  color: #e6f0ee;
 }
-
-.hero p{
-    margin:0;
-    color:#e8dfd0;
-    font-size:15px;
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(40, 30, 20, .08);
 }
-
-.grid{
-    display:grid;
-    grid-template-columns: minmax(250px, 1fr) minmax(280px, 1.2fr);
-    gap:22px;
+.label {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
-
-.card{
-    background:var(--paper);
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 12px 30px rgba(59,43,30,.12);
-    border:1px solid rgba(161,76,45,.08);
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
 }
-
-.section-title{
-    font-size:16px;
-    letter-spacing:1px;
-    margin:0 0 12px 0;
-    color:var(--accent);
+input[type="text"] {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+  background: #fff;
 }
-
-.inputs{
-    display:grid;
-    gap:12px;
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
 }
-
-label{
-    display:grid;
-    gap:6px;
-    font-size:13px;
-    color:#4f473d;
+.primary {
+  background: var(--accent);
+  color: #fff;
 }
-
-input, select{
-    padding:10px 12px;
-    border-radius:12px;
-    border:1px solid #d8cbb7;
-    background:#fffdf8;
-    font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+.ghost {
+  background: #fff;
+  color: var(--muted);
+  border: 1px solid var(--line);
 }
-
-.inline{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
 }
-
-.actions{
-    margin-top:12px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+.hint {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
 }
-
-button{
-    border:none;
-    border-radius:999px;
-    padding:10px 18px;
-    font-weight:700;
-    cursor:pointer;
-    font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+.result {
+  display: grid;
+  gap: 10px;
 }
-
-.primary{
-    background:linear-gradient(120deg, var(--accent), #d07a4a);
-    color:#fff;
-    box-shadow:0 8px 20px rgba(161,76,45,.25);
+.recipe {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
 }
-
-.ghost{
-    background:transparent;
-    color:var(--accent-2);
-    border:1px solid rgba(47,107,106,.4);
+.recipe h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
 }
-
-.result{
-    display:grid;
-    gap:14px;
-    opacity:0;
-    transform:translateY(8px);
-    transition:opacity .4s ease, transform .4s ease;
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
 }
-
-.result.show{
-    opacity:1;
-    transform:translateY(0);
+.tag {
+  background: var(--accent-soft);
+  color: #7f3a20;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
 }
-
-.pillars{
-    display:grid;
-    grid-template-columns:repeat(4, minmax(0, 1fr));
-    gap:8px;
+.ok {
+  background: #dff2ea;
+  color: var(--ok);
 }
-
-.pillar{
-    padding:10px;
-    border-radius:14px;
-    background:linear-gradient(160deg, #fff4e2, #f1e3cf);
-    text-align:center;
-    border:1px solid rgba(161,76,45,.12);
+.desc {
+  margin: 0;
+  color: #534736;
+  font-size: 14px;
+  line-height: 1.5;
 }
-
-.pillar strong{
-    display:block;
-    font-size:18px;
-    letter-spacing:2px;
+.empty {
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  color: var(--muted);
+  background: #fff;
 }
-
-.pill{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 10px;
-    border-radius:999px;
-    background:#efe3cf;
-    color:#5f4b32;
-    font-size:12px;
-}
-
-.bar{
-    display:grid;
-    gap:8px;
-}
-
-.bar-row{
-    display:grid;
-    grid-template-columns:64px 1fr;
-    gap:10px;
-    align-items:center;
-    font-size:13px;
-}
-
-.track{
-    height:10px;
-    background:#eadfce;
-    border-radius:999px;
-    overflow:hidden;
-}
-
-.fill{
-    height:100%;
-    border-radius:999px;
-}
-
-.note{
-    font-size:12px;
-    color:#6f6354;
-    line-height:1.6;
-}
-
-.fade-up{
-    animation:fadeUp .7s ease both;
-}
-
-.delay-1{ animation-delay:.12s; }
-.delay-2{ animation-delay:.22s; }
-.delay-3{ animation-delay:.32s; }
-
-@keyframes fadeUp{
-    from{ opacity:0; transform:translateY(10px); }
-    to{ opacity:1; transform:translateY(0); }
-}
-
-@media (max-width:900px){
-    .grid{ grid-template-columns:1fr; }
-    .pillars{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+@media (max-width: 700px) {
+  .form-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
-
 <body>
-<main class="shell">
-    <section class="hero fade-up">
-        <h1>청명 사주풀이</h1>
-        <p>생년월일과 시간을 입력하면 오늘의 기운과 오행 균형을 가볍게 읽어드립니다.</p>
-    </section>
+<main class="wrap">
+  <section class="hero">
+    <h1>냉장고 레시피 추천</h1>
+    <p>가지고 있는 재료를 입력하면 만들 수 있는 요리를 바로 찾아드립니다.</p>
+  </section>
 
-    <section class="grid">
-        <div class="card fade-up delay-1">
-            <h2 class="section-title">사주 입력</h2>
-            <div class="inputs">
-                <label>
-                    생년월일
-                    <input type="date" id="birthDate" />
-                </label>
+  <section class="card">
+    <div class="label">재료 입력</div>
+    <div class="form-row">
+      <input id="ingredients" type="text" placeholder="예: 계란, 양파, 감자, 간장" />
+      <button id="findBtn" class="primary">레시피 찾기</button>
+    </div>
+    <div class="actions">
+      <button id="sampleBtn" class="ghost">샘플 넣기</button>
+      <button id="resetBtn" class="ghost">초기화</button>
+    </div>
+    <p class="hint">쉼표(,)로 구분해서 입력하세요.</p>
+  </section>
 
-                <div class="inline">
-                    <label>
-                        출생 시간
-                        <input type="time" id="birthTime" />
-                    </label>
-                    <label>
-                        성별
-                        <select id="gender">
-                            <option value="female">여성</option>
-                            <option value="male">남성</option>
-                        </select>
-                    </label>
-                </div>
-
-                <div class="inline">
-                    <label>
-                        달력
-                        <select id="calendar">
-                            <option value="solar">양력</option>
-                            <option value="lunar">음력</option>
-                        </select>
-                    </label>
-                    <label>
-                        거주 지역
-                        <select id="region">
-                            <option value="kr">한국 표준시</option>
-                            <option value="us">미국 태평양</option>
-                            <option value="eu">유럽 중부</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="primary" id="readBtn">사주 풀이 보기</button>
-                <button class="ghost" id="resetBtn">초기화</button>
-            </div>
-        </div>
-
-        <div class="card fade-up delay-2">
-            <h2 class="section-title">풀이 결과</h2>
-            <div class="result" id="result">
-                <div class="pill">오늘의 기운: <strong id="todayEnergy">-</strong></div>
-                <div class="pillars" id="pillars"></div>
-                <div class="bar" id="elementBars"></div>
-                <p class="note" id="guidance"></p>
-                <p class="note">이 페이지의 내용은 참고용이며 전문 상담을 대체하지 않습니다.</p>
-            </div>
-        </div>
-    </section>
+  <section class="card">
+    <div class="label">추천 결과</div>
+    <div id="result" class="result">
+      <div class="empty">재료를 입력하고 "레시피 찾기"를 눌러주세요.</div>
+    </div>
+  </section>
 </main>
 
 <script>
-const readBtn = document.getElementById("readBtn");
-const resetBtn = document.getElementById("resetBtn");
-const result = document.getElementById("result");
-const pillars = document.getElementById("pillars");
-const elementBars = document.getElementById("elementBars");
-const todayEnergy = document.getElementById("todayEnergy");
-const guidance = document.getElementById("guidance");
-
-const elements = [
-    { key:"wood", label:"목", color:"#5e8d5a" },
-    { key:"fire", label:"화", color:"#cc5a3c" },
-    { key:"earth", label:"토", color:"#b48a55" },
-    { key:"metal", label:"금", color:"#6f7a86" },
-    { key:"water", label:"수", color:"#3b6b9a" }
+const recipes = [
+  {
+    name: "계란볶음밥",
+    ingredients: ["밥", "계란", "대파", "간장", "식용유"],
+    time: "10분",
+    difficulty: "쉬움",
+    steps: "팬에 대파와 식용유를 볶아 향을 낸 뒤 계란, 밥, 간장 순서로 넣고 센 불에서 빠르게 볶습니다."
+  },
+  {
+    name: "감자채볶음",
+    ingredients: ["감자", "양파", "소금", "식용유"],
+    time: "15분",
+    difficulty: "쉬움",
+    steps: "감자와 양파를 채 썰어 찬물에 헹군 뒤 물기를 제거하고 소금으로 간해 볶습니다."
+  },
+  {
+    name: "김치찌개",
+    ingredients: ["김치", "돼지고기", "두부", "대파", "고춧가루", "물"],
+    time: "25분",
+    difficulty: "보통",
+    steps: "돼지고기와 김치를 먼저 볶고 물과 고춧가루를 넣어 끓인 후 두부와 대파를 넣어 마무리합니다."
+  },
+  {
+    name: "오믈렛",
+    ingredients: ["계란", "우유", "버터", "소금", "후추"],
+    time: "8분",
+    difficulty: "쉬움",
+    steps: "계란과 우유를 풀어 약불 팬에서 천천히 익히며 반으로 접어 완성합니다."
+  },
+  {
+    name: "토마토 파스타",
+    ingredients: ["스파게티면", "토마토소스", "마늘", "올리브오일", "소금"],
+    time: "20분",
+    difficulty: "보통",
+    steps: "면을 삶고, 팬에 마늘과 오일을 볶아 소스를 더한 뒤 면과 함께 버무립니다."
+  }
 ];
 
-const stems = ["갑","을","병","정","무","기","경","신","임","계"];
-const branches = ["자","축","인","묘","진","사","오","미","신","유","술","해"];
+const ingredientsInput = document.getElementById("ingredients");
+const findBtn = document.getElementById("findBtn");
+const sampleBtn = document.getElementById("sampleBtn");
+const resetBtn = document.getElementById("resetBtn");
+const result = document.getElementById("result");
 
-function hashNumber(str){
-    let h = 0;
-    for(let i=0;i<str.length;i++){
-        h = (h * 31 + str.charCodeAt(i)) % 100000;
-    }
-    return h;
+function parseIngredients(value) {
+  return value
+    .split(",")
+    .map(item => item.trim())
+    .filter(Boolean);
 }
 
-function pickPillars(seed){
-    const list = [];
-    for(let i=0;i<4;i++){
-        const s = stems[(seed + i * 7) % stems.length];
-        const b = branches[(seed + i * 11) % branches.length];
-        list.push({ stem:s, branch:b });
-    }
-    return list;
+function scoreRecipe(userIngredients, recipeIngredients) {
+  const matched = recipeIngredients.filter(item => userIngredients.includes(item));
+  return {
+    matched,
+    missing: recipeIngredients.filter(item => !userIngredients.includes(item))
+  };
 }
 
-function buildBars(seed){
-    const totals = elements.map((el, idx)=>({
-        ...el,
-        value: (seed * (idx + 3) + idx * 13) % 100
-    }));
-    const sum = totals.reduce((acc, cur)=>acc + cur.value, 0) || 1;
-    return totals.map(t=>({ ...t, percent: Math.round(t.value / sum * 100) }));
+function renderRecipes(userIngredients) {
+  if (userIngredients.length === 0) {
+    result.innerHTML = '<div class="empty">재료를 한 개 이상 입력해주세요.</div>';
+    return;
+  }
+
+  const scored = recipes
+    .map(recipe => {
+      const score = scoreRecipe(userIngredients, recipe.ingredients);
+      return {
+        recipe,
+        ...score,
+        ratio: score.matched.length / recipe.ingredients.length
+      };
+    })
+    .filter(item => item.matched.length > 0)
+    .sort((a, b) => b.ratio - a.ratio || a.missing.length - b.missing.length)
+    .slice(0, 5);
+
+  if (scored.length === 0) {
+    result.innerHTML = '<div class="empty">일치하는 레시피가 없습니다. 다른 재료를 추가해보세요.</div>';
+    return;
+  }
+
+  result.innerHTML = scored.map(item => {
+    const { recipe, matched, missing } = item;
+    const matchedText = `보유 재료 ${matched.length}/${recipe.ingredients.length}`;
+    const missingText = missing.length ? `추가 필요: ${missing.join(", ")}` : "지금 바로 조리 가능";
+
+    return `
+      <article class="recipe">
+        <h3>${recipe.name}</h3>
+        <div class="meta">
+          <span class="tag ok">${matchedText}</span>
+          <span class="tag">${recipe.time}</span>
+          <span class="tag">난이도 ${recipe.difficulty}</span>
+        </div>
+        <p class="desc"><strong>${missingText}</strong></p>
+        <p class="desc">조리법: ${recipe.steps}</p>
+      </article>
+    `;
+  }).join("");
 }
 
-function energyMessage(seed){
-    const list = [
-        "새로운 시작에 강한 흐름이 있습니다.",
-        "관계의 균형을 지키는 날입니다.",
-        "집중과 정리가 잘 되는 날입니다.",
-        "감정의 파도가 있으니 호흡을 길게 가져가세요.",
-        "도전보다 복기에 유리한 날입니다."
-    ];
-    return list[seed % list.length];
-}
+findBtn.addEventListener("click", () => {
+  const userIngredients = parseIngredients(ingredientsInput.value);
+  renderRecipes(userIngredients);
+});
 
-function guidanceMessage(top){
-    switch(top){
-        case "목":
-            return "목 기운이 두드러집니다. 계획을 세워 실행력을 높이면 좋습니다.";
-        case "화":
-            return "화 기운이 강합니다. 과열을 피하고 속도를 조절하세요.";
-        case "토":
-            return "토 기운이 중심을 잡아줍니다. 안정적인 선택이 유리합니다.";
-        case "금":
-            return "금 기운이 선명합니다. 정리와 결단에 힘이 실립니다.";
-        default:
-            return "수 기운이 흐릅니다. 유연함과 휴식이 도움이 됩니다.";
-    }
-}
+sampleBtn.addEventListener("click", () => {
+  ingredientsInput.value = "계란, 양파, 감자, 소금, 식용유";
+  renderRecipes(parseIngredients(ingredientsInput.value));
+});
 
-function renderResult(){
-    const date = document.getElementById("birthDate").value;
-    const time = document.getElementById("birthTime").value || "00:00";
-    const gender = document.getElementById("gender").value;
-    const calendar = document.getElementById("calendar").value;
-    const region = document.getElementById("region").value;
-
-    const seed = hashNumber(`${date}-${time}-${gender}-${calendar}-${region}`);
-    const pillarList = pickPillars(seed);
-    const barList = buildBars(seed);
-
-    pillars.innerHTML = "";
-    pillarList.forEach((p, idx)=>{
-        const div = document.createElement("div");
-        div.className = "pillar";
-        div.innerHTML = `<span>${["년","월","일","시"][idx]}주</span><strong>${p.stem}${p.branch}</strong>`;
-        pillars.appendChild(div);
-    });
-
-    elementBars.innerHTML = "";
-    barList.forEach(bar=>{
-        const row = document.createElement("div");
-        row.className = "bar-row";
-        row.innerHTML = `
-            <span>${bar.label}</span>
-            <div class="track">
-                <div class="fill" style="width:${bar.percent}%; background:${bar.color};"></div>
-            </div>
-        `;
-        elementBars.appendChild(row);
-    });
-
-    const top = barList.sort((a,b)=>b.percent - a.percent)[0].label;
-    todayEnergy.textContent = energyMessage(seed);
-    guidance.textContent = guidanceMessage(top);
-
-    result.classList.add("show");
-}
-
-function resetForm(){
-    document.getElementById("birthDate").value = "";
-    document.getElementById("birthTime").value = "";
-    document.getElementById("gender").value = "female";
-    document.getElementById("calendar").value = "solar";
-    document.getElementById("region").value = "kr";
-    result.classList.remove("show");
-}
-
-readBtn.addEventListener("click", renderResult);
-resetBtn.addEventListener("click", resetForm);
+resetBtn.addEventListener("click", () => {
+  ingredientsInput.value = "";
+  result.innerHTML = '<div class="empty">재료를 입력하고 "레시피 찾기"를 눌러주세요.</div>';
+});
 </script>
 </body>
 </html>
