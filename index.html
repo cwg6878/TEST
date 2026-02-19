@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>청명 사주풀이</title>
+
+<style>
+:root{
+    --ink:#1b1a17;
+    --paper:#f6f1e7;
+    --mid:#c8b79b;
+    --accent:#a14c2d;
+    --accent-2:#2f6b6a;
+    --deep:#0f1b2b;
+}
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(255,248,220,.6), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(207,233,232,.45), transparent 60%),
+        linear-gradient(160deg, #f7f2e8 0%, #eee3cf 55%, #e5dccb 100%);
+    color:var(--ink);
+    font-family:"Nanum Myeongjo","Noto Serif KR","Gowun Batang",serif;
+    padding:28px;
+}
+
+.shell{
+    width:min(1100px, 100%);
+    margin:0 auto;
+    display:grid;
+    gap:22px;
+}
+
+.hero{
+    background:
+        linear-gradient(140deg, rgba(15,27,43,.92), rgba(31,55,72,.92)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 100 100'%3E%3Cpath d='M0 50h100M50 0v100' stroke='%232a3f52' stroke-width='0.6'/%3E%3C/svg%3E");
+    color:#f7f0e6;
+    border-radius:24px;
+    padding:28px 26px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 20px 40px rgba(19,27,36,.25);
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:
+        radial-gradient(closest-side, rgba(255,223,171,.2), transparent 70%);
+    transform:translate(40%, -10%);
+    pointer-events:none;
+}
+
+.hero h1{
+    font-size:30px;
+    letter-spacing:2px;
+    margin:0 0 6px 0;
+}
+
+.hero p{
+    margin:0;
+    color:#e8dfd0;
+    font-size:15px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns: minmax(250px, 1fr) minmax(280px, 1.2fr);
+    gap:22px;
+}
+
+.card{
+    background:var(--paper);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 12px 30px rgba(59,43,30,.12);
+    border:1px solid rgba(161,76,45,.08);
+}
+
+.section-title{
+    font-size:16px;
+    letter-spacing:1px;
+    margin:0 0 12px 0;
+    color:var(--accent);
+}
+
+.inputs{
+    display:grid;
+    gap:12px;
+}
+
+label{
+    display:grid;
+    gap:6px;
+    font-size:13px;
+    color:#4f473d;
+}
+
+input, select{
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid #d8cbb7;
+    background:#fffdf8;
+    font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+}
+
+.inline{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.actions{
+    margin-top:12px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    border-radius:999px;
+    padding:10px 18px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+}
+
+.primary{
+    background:linear-gradient(120deg, var(--accent), #d07a4a);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(161,76,45,.25);
+}
+
+.ghost{
+    background:transparent;
+    color:var(--accent-2);
+    border:1px solid rgba(47,107,106,.4);
+}
+
+.result{
+    display:grid;
+    gap:14px;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity .4s ease, transform .4s ease;
+}
+
+.result.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.pillars{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:8px;
+}
+
+.pillar{
+    padding:10px;
+    border-radius:14px;
+    background:linear-gradient(160deg, #fff4e2, #f1e3cf);
+    text-align:center;
+    border:1px solid rgba(161,76,45,.12);
+}
+
+.pillar strong{
+    display:block;
+    font-size:18px;
+    letter-spacing:2px;
+}
+
+.pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#efe3cf;
+    color:#5f4b32;
+    font-size:12px;
+}
+
+.bar{
+    display:grid;
+    gap:8px;
+}
+
+.bar-row{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:10px;
+    align-items:center;
+    font-size:13px;
+}
+
+.track{
+    height:10px;
+    background:#eadfce;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    border-radius:999px;
+}
+
+.note{
+    font-size:12px;
+    color:#6f6354;
+    line-height:1.6;
+}
+
+.fade-up{
+    animation:fadeUp .7s ease both;
+}
+
+.delay-1{ animation-delay:.12s; }
+.delay-2{ animation-delay:.22s; }
+.delay-3{ animation-delay:.32s; }
+
+@keyframes fadeUp{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+@media (max-width:900px){
+    .grid{ grid-template-columns:1fr; }
+    .pillars{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
+</style>
+</head>
+
+<body>
+<main class="shell">
+    <section class="hero fade-up">
+        <h1>청명 사주풀이</h1>
+        <p>생년월일과 시간을 입력하면 오늘의 기운과 오행 균형을 가볍게 읽어드립니다.</p>
+    </section>
+
+    <section class="grid">
+        <div class="card fade-up delay-1">
+            <h2 class="section-title">사주 입력</h2>
+            <div class="inputs">
+                <label>
+                    생년월일
+                    <input type="date" id="birthDate" />
+                </label>
+
+                <div class="inline">
+                    <label>
+                        출생 시간
+                        <input type="time" id="birthTime" />
+                    </label>
+                    <label>
+                        성별
+                        <select id="gender">
+                            <option value="female">여성</option>
+                            <option value="male">남성</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="inline">
+                    <label>
+                        달력
+                        <select id="calendar">
+                            <option value="solar">양력</option>
+                            <option value="lunar">음력</option>
+                        </select>
+                    </label>
+                    <label>
+                        거주 지역
+                        <select id="region">
+                            <option value="kr">한국 표준시</option>
+                            <option value="us">미국 태평양</option>
+                            <option value="eu">유럽 중부</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="primary" id="readBtn">사주 풀이 보기</button>
+                <button class="ghost" id="resetBtn">초기화</button>
+            </div>
+        </div>
+
+        <div class="card fade-up delay-2">
+            <h2 class="section-title">풀이 결과</h2>
+            <div class="result" id="result">
+                <div class="pill">오늘의 기운: <strong id="todayEnergy">-</strong></div>
+                <div class="pillars" id="pillars"></div>
+                <div class="bar" id="elementBars"></div>
+                <p class="note" id="guidance"></p>
+                <p class="note">이 페이지의 내용은 참고용이며 전문 상담을 대체하지 않습니다.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+const readBtn = document.getElementById("readBtn");
+const resetBtn = document.getElementById("resetBtn");
+const result = document.getElementById("result");
+const pillars = document.getElementById("pillars");
+const elementBars = document.getElementById("elementBars");
+const todayEnergy = document.getElementById("todayEnergy");
+const guidance = document.getElementById("guidance");
+
+const elements = [
+    { key:"wood", label:"목", color:"#5e8d5a" },
+    { key:"fire", label:"화", color:"#cc5a3c" },
+    { key:"earth", label:"토", color:"#b48a55" },
+    { key:"metal", label:"금", color:"#6f7a86" },
+    { key:"water", label:"수", color:"#3b6b9a" }
+];
+
+const stems = ["갑","을","병","정","무","기","경","신","임","계"];
+const branches = ["자","축","인","묘","진","사","오","미","신","유","술","해"];
+
+function hashNumber(str){
+    let h = 0;
+    for(let i=0;i<str.length;i++){
+        h = (h * 31 + str.charCodeAt(i)) % 100000;
+    }
+    return h;
+}
+
+function pickPillars(seed){
+    const list = [];
+    for(let i=0;i<4;i++){
+        const s = stems[(seed + i * 7) % stems.length];
+        const b = branches[(seed + i * 11) % branches.length];
+        list.push({ stem:s, branch:b });
+    }
+    return list;
+}
+
+function buildBars(seed){
+    const totals = elements.map((el, idx)=>({
+        ...el,
+        value: (seed * (idx + 3) + idx * 13) % 100
+    }));
+    const sum = totals.reduce((acc, cur)=>acc + cur.value, 0) || 1;
+    return totals.map(t=>({ ...t, percent: Math.round(t.value / sum * 100) }));
+}
+
+function energyMessage(seed){
+    const list = [
+        "새로운 시작에 강한 흐름이 있습니다.",
+        "관계의 균형을 지키는 날입니다.",
+        "집중과 정리가 잘 되는 날입니다.",
+        "감정의 파도가 있으니 호흡을 길게 가져가세요.",
+        "도전보다 복기에 유리한 날입니다."
+    ];
+    return list[seed % list.length];
+}
+
+function guidanceMessage(top){
+    switch(top){
+        case "목":
+            return "목 기운이 두드러집니다. 계획을 세워 실행력을 높이면 좋습니다.";
+        case "화":
+            return "화 기운이 강합니다. 과열을 피하고 속도를 조절하세요.";
+        case "토":
+            return "토 기운이 중심을 잡아줍니다. 안정적인 선택이 유리합니다.";
+        case "금":
+            return "금 기운이 선명합니다. 정리와 결단에 힘이 실립니다.";
+        default:
+            return "수 기운이 흐릅니다. 유연함과 휴식이 도움이 됩니다.";
+    }
+}
+
+function renderResult(){
+    const date = document.getElementById("birthDate").value;
+    const time = document.getElementById("birthTime").value || "00:00";
+    const gender = document.getElementById("gender").value;
+    const calendar = document.getElementById("calendar").value;
+    const region = document.getElementById("region").value;
+
+    const seed = hashNumber(`${date}-${time}-${gender}-${calendar}-${region}`);
+    const pillarList = pickPillars(seed);
+    const barList = buildBars(seed);
+
+    pillars.innerHTML = "";
+    pillarList.forEach((p, idx)=>{
+        const div = document.createElement("div");
+        div.className = "pillar";
+        div.innerHTML = `<span>${["년","월","일","시"][idx]}주</span><strong>${p.stem}${p.branch}</strong>`;
+        pillars.appendChild(div);
+    });
+
+    elementBars.innerHTML = "";
+    barList.forEach(bar=>{
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+            <span>${bar.label}</span>
+            <div class="track">
+                <div class="fill" style="width:${bar.percent}%; background:${bar.color};"></div>
+            </div>
+        `;
+        elementBars.appendChild(row);
+    });
+
+    const top = barList.sort((a,b)=>b.percent - a.percent)[0].label;
+    todayEnergy.textContent = energyMessage(seed);
+    guidance.textContent = guidanceMessage(top);
+
+    result.classList.add("show");
+}
+
+function resetForm(){
+    document.getElementById("birthDate").value = "";
+    document.getElementById("birthTime").value = "";
+    document.getElementById("gender").value = "female";
+    document.getElementById("calendar").value = "solar";
+    document.getElementById("region").value = "kr";
+    result.classList.remove("show");
+}
+
+readBtn.addEventListener("click", renderResult);
+resetBtn.addEventListener("click", resetForm);
+</script>
+</body>
+</html>
