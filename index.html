@@ -5,68 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="google-adsense-account" content="ca-pub-2754903713509336" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2754903713509336" crossorigin="anonymous"></script>
-<title>빠른 두더지 게임</title>
+<title>반응속도 연구소 | 두더지 게임</title>
 <style>
 :root {
   --bg1: #0f172a;
-  --bg2: #172554;
-  --card: #f8fafc;
+  --bg2: #1e293b;
+  --card: #ffffff;
   --ink: #0f172a;
-  --accent: #f97316;
-  --accent-2: #06b6d4;
-  --line: #d7dde7;
+  --muted: #475569;
+  --line: #d9e2ef;
+  --accent: #ea580c;
+  --accent2: #0891b2;
 }
 * { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
 body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 18px;
   font-family: "Noto Sans KR", sans-serif;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.25), transparent 40%),
-    radial-gradient(circle at 80% 10%, rgba(249, 115, 22, 0.2), transparent 35%),
-    linear-gradient(160deg, var(--bg1), var(--bg2));
-}
-.wrap {
-  width: min(860px, 100%);
-  background: var(--card);
   color: var(--ink);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 20px 45px rgba(2, 8, 23, 0.45);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(34, 211, 238, 0.2), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(234, 88, 12, 0.2), transparent 38%),
+    linear-gradient(165deg, var(--bg1), var(--bg2));
 }
-h1 { margin: 0; font-size: 30px; }
-.sub { margin: 8px 0 16px; color: #475569; }
+.page {
+  width: min(980px, calc(100% - 28px));
+  margin: 20px auto;
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 45px rgba(2, 8, 23, 0.4);
+  overflow: hidden;
+}
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+.nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.nav a {
+  text-decoration: none;
+  color: #0f172a;
+  background: #e2e8f0;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.hero {
+  padding: 24px 20px 18px;
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(24px, 4.4vw, 34px);
+}
+.hero p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.game {
+  padding: 6px 20px 20px;
+}
 .top {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  align-items: center;
+  margin-bottom: 12px;
 }
-.stats { display: flex; gap: 8px; flex-wrap: wrap; }
+.stats, .controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .badge {
   background: #e2e8f0;
   border-radius: 999px;
   padding: 7px 12px;
   font-weight: 700;
 }
-.controls { display: flex; gap: 8px; flex-wrap: wrap; }
 button {
   border: 0;
   border-radius: 999px;
   padding: 9px 14px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
 }
-#startBtn { background: var(--accent); color: white; }
+#startBtn { background: var(--accent); color: #fff; }
 #resetBtn { background: #cbd5e1; color: #0f172a; }
-#contactBtn { background: var(--accent-2); color: #082f49; }
+#contactBtn { background: var(--accent2); color: #082f49; }
 .board {
-  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, minmax(80px, 1fr));
   gap: 10px;
@@ -74,31 +116,62 @@ button {
 .hole {
   aspect-ratio: 1 / 1;
   border-radius: 16px;
-  border: 2px solid #dbeafe;
+  border: 2px solid #cfe1ff;
   background: #e0f2fe;
   display: grid;
   place-items: center;
-  font-size: clamp(30px, 6vw, 42px);
-  user-select: none;
+  font-size: clamp(32px, 6vw, 44px);
   transition: transform .12s ease, background-color .12s ease;
 }
-.hole:active { transform: scale(.96); }
+.hole:active { transform: scale(.97); }
 .hole.active {
-  background: #fed7aa;
+  background: #ffedd5;
   border-color: #fdba74;
 }
 .note {
-  margin-top: 12px;
+  margin-top: 10px;
   color: #334155;
   font-size: 14px;
+}
+.section {
+  padding: 4px 20px 22px;
+  border-top: 1px solid var(--line);
+}
+.section h2 {
+  margin: 18px 0 8px;
+  font-size: 22px;
+}
+.section h3 {
+  margin: 14px 0 8px;
+  font-size: 18px;
+}
+.section p, .section li {
+  color: #1e293b;
+  line-height: 1.75;
+}
+.section ul {
+  margin: 8px 0;
+  padding-left: 18px;
+}
+.callout {
+  background: #eff6ff;
+  border: 1px solid #c9dcff;
+  border-radius: 14px;
+  padding: 12px;
+}
+.footer {
+  padding: 16px 20px 22px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
 }
 .modal {
   position: fixed;
   inset: 0;
   display: none;
   place-items: center;
-  background: rgba(15, 23, 42, 0.58);
-  padding: 18px;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.56);
 }
 .modal.show { display: grid; }
 .modal-card {
@@ -110,18 +183,13 @@ button {
 }
 .modal-head {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  align-items: center;
   margin-bottom: 10px;
 }
-.modal-head h2 { margin: 0; font-size: 24px; }
-.close-btn {
-  background: #e2e8f0;
-  color: #0f172a;
-}
+.modal-head h2 { margin: 0; }
 .form-grid { display: grid; gap: 10px; }
-label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+label { display: grid; gap: 6px; font-size: 14px; font-weight: 700; }
 input, textarea {
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -129,43 +197,102 @@ input, textarea {
   font: inherit;
 }
 textarea { min-height: 120px; resize: vertical; }
-.submit-btn {
-  background: #ad4e2b;
-  color: #fff;
-}
-@media (max-width: 560px) {
-  h1 { font-size: 24px; }
-  .modal-head h2 { font-size: 20px; }
+.submit-btn { background: #a13d1d; color: #fff; }
+@media (max-width: 680px) {
+  .topbar { padding: 12px; }
+  .hero, .game, .section, .footer { padding-left: 14px; padding-right: 14px; }
 }
 </style>
 </head>
 <body>
-<main class="wrap">
-  <h1>빠른 두더지 게임</h1>
-  <p class="sub">30초 동안 나타나는 두더지를 최대한 많이 클릭하세요.</p>
+<main class="page">
+  <header class="topbar">
+    <div class="brand">반응속도 연구소</div>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="index.html">홈</a>
+      <a href="#guide">게임 가이드</a>
+      <a href="#faq">FAQ</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보처리방침</a>
+      <a href="terms.html">이용약관</a>
+    </nav>
+  </header>
 
-  <section class="top">
-    <div class="stats">
-      <span class="badge">점수: <strong id="score">0</strong></span>
-      <span class="badge">남은 시간: <strong id="time">30</strong>초</span>
-      <span class="badge">최고 점수: <strong id="best">0</strong></span>
+  <section class="hero">
+    <h1>두더지 게임으로 반응속도를 훈련해 보세요</h1>
+    <p>
+      이 사이트는 단순한 클릭 게임이 아니라, 짧은 시간 안에 시각 자극을 인식하고 정확하게 반응하는 습관을 만들기 위한 연습 도구입니다.
+      플레이 데이터는 브라우저에만 저장되며, 최고 점수를 기준으로 자신의 집중력 변화를 비교해 볼 수 있습니다.
+    </p>
+  </section>
+
+  <section class="game" aria-label="두더지 게임">
+    <div class="top">
+      <div class="stats">
+        <span class="badge">점수: <strong id="score">0</strong></span>
+        <span class="badge">남은 시간: <strong id="time">30</strong>초</span>
+        <span class="badge">최고 점수: <strong id="best">0</strong></span>
+      </div>
+      <div class="controls">
+        <button id="startBtn" type="button">시작</button>
+        <button id="resetBtn" type="button">기록 초기화</button>
+        <button id="contactBtn" type="button">제휴 문의</button>
+      </div>
     </div>
-    <div class="controls">
-      <button id="startBtn" type="button">시작</button>
-      <button id="resetBtn" type="button">기록 초기화</button>
-      <button id="contactBtn" type="button">제휴 문의</button>
+    <div class="board" id="board"></div>
+    <p class="note" id="message">시작 버튼을 누르면 30초 게임이 시작됩니다.</p>
+  </section>
+
+  <section class="section" id="guide">
+    <h2>게임 가이드</h2>
+    <p>
+      반응속도는 단순히 손이 빠른 것보다, 집중 전환과 시선 이동의 효율에 더 크게 영향을 받습니다.
+      두더지 게임은 화면 전체를 한 번에 보는 습관과 오클릭을 줄이는 정확도 훈련에 유리합니다.
+      아래 방법으로 플레이하면 같은 시간 안에서도 점수 편차를 줄일 수 있습니다.
+    </p>
+    <h3>플레이 전 준비</h3>
+    <ul>
+      <li>모바일은 세로 고정 후 양손 엄지로 플레이하면 안정적입니다.</li>
+      <li>데스크톱은 마우스 감도를 평소보다 약간 낮게 두면 오클릭을 줄일 수 있습니다.</li>
+      <li>게임 시작 전에 10초 동안 화면 중앙을 보며 시야를 넓게 가져가세요.</li>
+    </ul>
+    <h3>점수를 올리는 핵심 루틴</h3>
+    <ul>
+      <li>두더지가 나타난 칸만 보지 말고 3x3 전체 패턴을 스캔합니다.</li>
+      <li>연속 클릭보다 정확한 1클릭을 우선해 실수를 줄입니다.</li>
+      <li>5초 단위로 리듬을 맞추면 후반 집중력 저하를 완화할 수 있습니다.</li>
+    </ul>
+    <div class="callout">
+      <strong>운영 원칙:</strong>
+      본 사이트는 사용자에게 실제로 도움이 되는 게임 경험과 설명 콘텐츠를 제공하는 것을 최우선 목표로 합니다.
+      광고는 콘텐츠를 가리지 않도록 배치하며, 오해를 유도하는 클릭 유도 문구를 사용하지 않습니다.
     </div>
   </section>
 
-  <section class="board" id="board"></section>
-  <p class="note" id="message">시작 버튼을 누르면 게임이 시작됩니다.</p>
+  <section class="section" id="faq">
+    <h2>자주 묻는 질문</h2>
+    <h3>Q. 최고 점수는 어디에 저장되나요?</h3>
+    <p>A. 브라우저의 로컬 저장소에만 저장되며, 서버로 전송하지 않습니다.</p>
+    <h3>Q. 게임 데이터 수집을 하나요?</h3>
+    <p>A. 개인 식별 정보를 수집하지 않습니다. 문의 폼 제출 시에만 사용자가 입력한 정보가 Formspree를 통해 전달됩니다.</p>
+    <h3>Q. 광고를 클릭하면 점수가 올라가나요?</h3>
+    <p>A. 아닙니다. 광고 클릭과 게임 점수는 전혀 연동되지 않으며, 클릭 유도 요소도 제공하지 않습니다.</p>
+    <h3>Q. 업데이트는 얼마나 자주 되나요?</h3>
+    <p>A. 월 1회 이상 개선을 목표로 하며, 버그 수정 및 난이도 개선 내역은 소개 페이지에 기록합니다.</p>
+  </section>
+
+  <footer class="footer">
+    <div>운영자: 반응속도 연구소</div>
+    <div>문의: 제휴 문의 버튼 또는 about 페이지 연락처 참고</div>
+    <div>최종 업데이트: 2026-02-19</div>
+  </footer>
 </main>
 
 <section class="modal" id="contactModal" aria-hidden="true">
   <div class="modal-card">
     <div class="modal-head">
       <h2>제휴 문의</h2>
-      <button class="close-btn" id="closeModalBtn" type="button">닫기</button>
+      <button id="closeModalBtn" type="button">닫기</button>
     </div>
     <form action="https://formspree.io/f/xrealdzz" method="POST" class="form-grid">
       <label>
@@ -184,7 +311,7 @@ textarea { min-height: 120px; resize: vertical; }
         문의 내용
         <textarea name="message" required></textarea>
       </label>
-      <input type="hidden" name="subject" value="[웹사이트] 제휴 문의 접수" />
+      <input type="hidden" name="subject" value="[반응속도 연구소] 제휴 문의 접수" />
       <button class="submit-btn" type="submit">문의 보내기</button>
     </form>
   </div>
@@ -233,9 +360,9 @@ function getHoles() {
 function setActiveHole(index) {
   const holes = getHoles();
   holes.forEach((hole, i) => {
-    const on = i === index;
-    hole.classList.toggle("active", on);
-    hole.textContent = on ? "🐹" : "🕳️";
+    const active = i === index;
+    hole.classList.toggle("active", active);
+    hole.textContent = active ? "🐹" : "🕳️";
   });
   activeIndex = index;
 }
@@ -285,7 +412,7 @@ function startGame() {
   timeLeft = TOTAL_TIME;
   scoreEl.textContent = "0";
   timeEl.textContent = String(TOTAL_TIME);
-  message.textContent = "두더지를 클릭해서 점수를 올리세요!";
+  message.textContent = "두더지를 클릭해 점수를 올리세요.";
   startBtn.disabled = true;
   tickMole();
   gameTimer = setInterval(() => {

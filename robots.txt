@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://cwg6878.github.io/TEST/sitemap.xml
