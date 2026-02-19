@@ -3,297 +3,251 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>냉장고 레시피 추천</title>
+<title>빠른 두더지 게임</title>
 <style>
 :root {
-  --bg: #fbf7ef;
-  --card: #fffdf8;
-  --ink: #262018;
-  --muted: #6a5b47;
-  --line: #e5d9c7;
-  --accent: #c75b2f;
-  --accent-soft: #f2dfd3;
-  --ok: #2a7f62;
+  --bg1: #0f172a;
+  --bg2: #172554;
+  --card: #f8fafc;
+  --ink: #0f172a;
+  --accent: #f97316;
+  --accent-2: #06b6d4;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
   min-height: 100vh;
-  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  font-family: "Noto Sans KR", sans-serif;
   background:
-    radial-gradient(circle at 15% 10%, #fff6db 0%, transparent 40%),
-    radial-gradient(circle at 85% 20%, #f6ead7 0%, transparent 45%),
-    linear-gradient(160deg, #fbf7ef 0%, #f2e8d9 100%);
-  font-family: "Pretendard", "Noto Sans KR", sans-serif;
-  padding: 24px;
+    radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.25), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(249, 115, 22, 0.2), transparent 35%),
+    linear-gradient(160deg, var(--bg1), var(--bg2));
 }
 .wrap {
-  width: min(980px, 100%);
-  margin: 0 auto;
-  display: grid;
-  gap: 18px;
-}
-.hero {
-  background: linear-gradient(130deg, #2d3d45, #3e565f);
-  color: #fff;
+  width: min(860px, 100%);
+  background: var(--card);
+  color: var(--ink);
   border-radius: 20px;
-  padding: 26px;
-  box-shadow: 0 16px 35px rgba(30, 32, 33, .2);
+  padding: 20px;
+  box-shadow: 0 20px 45px rgba(2, 8, 23, 0.45);
 }
-.hero h1 {
-  margin: 0 0 8px;
+h1 {
+  margin: 0;
   font-size: 30px;
 }
-.hero p {
-  margin: 0;
-  color: #e6f0ee;
+.sub {
+  margin: 8px 0 16px;
+  color: #475569;
 }
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 10px 24px rgba(40, 30, 20, .08);
-}
-.label {
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
+.top {
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
-input[type="text"] {
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-size: 15px;
-  background: #fff;
+.stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  background: #e2e8f0;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-weight: 700;
+}
+.controls {
+  display: flex;
+  gap: 8px;
 }
 button {
   border: 0;
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 9px 14px;
   font-weight: 700;
   cursor: pointer;
 }
-.primary {
+#startBtn {
   background: var(--accent);
-  color: #fff;
+  color: white;
 }
-.ghost {
-  background: #fff;
-  color: var(--muted);
-  border: 1px solid var(--line);
+#resetBtn {
+  background: #cbd5e1;
+  color: #0f172a;
 }
-.actions {
+.board {
   margin-top: 10px;
-  display: flex;
-  gap: 8px;
-}
-.hint {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 13px;
-}
-.result {
   display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
   gap: 10px;
 }
-.recipe {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 14px;
-  background: #fff;
+.hole {
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  border: 2px solid #dbeafe;
+  background: #e0f2fe;
+  display: grid;
+  place-items: center;
+  font-size: clamp(30px, 6vw, 42px);
+  user-select: none;
+  transition: transform .12s ease, background-color .12s ease;
 }
-.recipe h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
+.hole:active { transform: scale(.96); }
+.hole.active {
+  background: #fed7aa;
+  border-color: #fdba74;
 }
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.tag {
-  background: var(--accent-soft);
-  color: #7f3a20;
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 12px;
-}
-.ok {
-  background: #dff2ea;
-  color: var(--ok);
-}
-.desc {
-  margin: 0;
-  color: #534736;
+.note {
+  margin-top: 12px;
+  color: #334155;
   font-size: 14px;
-  line-height: 1.5;
 }
-.empty {
-  border: 1px dashed var(--line);
-  border-radius: 12px;
-  padding: 18px;
-  color: var(--muted);
-  background: #fff;
-}
-@media (max-width: 700px) {
-  .form-row { grid-template-columns: 1fr; }
+@media (max-width: 560px) {
+  h1 { font-size: 24px; }
 }
 </style>
 </head>
 <body>
 <main class="wrap">
-  <section class="hero">
-    <h1>냉장고 레시피 추천</h1>
-    <p>가지고 있는 재료를 입력하면 만들 수 있는 요리를 바로 찾아드립니다.</p>
+  <h1>빠른 두더지 게임</h1>
+  <p class="sub">30초 동안 나타나는 두더지를 최대한 많이 클릭하세요.</p>
+
+  <section class="top">
+    <div class="stats">
+      <span class="badge">점수: <strong id="score">0</strong></span>
+      <span class="badge">남은 시간: <strong id="time">30</strong>초</span>
+      <span class="badge">최고 점수: <strong id="best">0</strong></span>
+    </div>
+    <div class="controls">
+      <button id="startBtn">시작</button>
+      <button id="resetBtn">기록 초기화</button>
+    </div>
   </section>
 
-  <section class="card">
-    <div class="label">재료 입력</div>
-    <div class="form-row">
-      <input id="ingredients" type="text" placeholder="예: 계란, 양파, 감자, 간장" />
-      <button id="findBtn" class="primary">레시피 찾기</button>
-    </div>
-    <div class="actions">
-      <button id="sampleBtn" class="ghost">샘플 넣기</button>
-      <button id="resetBtn" class="ghost">초기화</button>
-    </div>
-    <p class="hint">쉼표(,)로 구분해서 입력하세요.</p>
-  </section>
-
-  <section class="card">
-    <div class="label">추천 결과</div>
-    <div id="result" class="result">
-      <div class="empty">재료를 입력하고 "레시피 찾기"를 눌러주세요.</div>
-    </div>
-  </section>
+  <section class="board" id="board"></section>
+  <p class="note" id="message">시작 버튼을 누르면 게임이 시작됩니다.</p>
 </main>
 
 <script>
-const recipes = [
-  {
-    name: "계란볶음밥",
-    ingredients: ["밥", "계란", "대파", "간장", "식용유"],
-    time: "10분",
-    difficulty: "쉬움",
-    steps: "팬에 대파와 식용유를 볶아 향을 낸 뒤 계란, 밥, 간장 순서로 넣고 센 불에서 빠르게 볶습니다."
-  },
-  {
-    name: "감자채볶음",
-    ingredients: ["감자", "양파", "소금", "식용유"],
-    time: "15분",
-    difficulty: "쉬움",
-    steps: "감자와 양파를 채 썰어 찬물에 헹군 뒤 물기를 제거하고 소금으로 간해 볶습니다."
-  },
-  {
-    name: "김치찌개",
-    ingredients: ["김치", "돼지고기", "두부", "대파", "고춧가루", "물"],
-    time: "25분",
-    difficulty: "보통",
-    steps: "돼지고기와 김치를 먼저 볶고 물과 고춧가루를 넣어 끓인 후 두부와 대파를 넣어 마무리합니다."
-  },
-  {
-    name: "오믈렛",
-    ingredients: ["계란", "우유", "버터", "소금", "후추"],
-    time: "8분",
-    difficulty: "쉬움",
-    steps: "계란과 우유를 풀어 약불 팬에서 천천히 익히며 반으로 접어 완성합니다."
-  },
-  {
-    name: "토마토 파스타",
-    ingredients: ["스파게티면", "토마토소스", "마늘", "올리브오일", "소금"],
-    time: "20분",
-    difficulty: "보통",
-    steps: "면을 삶고, 팬에 마늘과 오일을 볶아 소스를 더한 뒤 면과 함께 버무립니다."
-  }
-];
-
-const ingredientsInput = document.getElementById("ingredients");
-const findBtn = document.getElementById("findBtn");
-const sampleBtn = document.getElementById("sampleBtn");
+const board = document.getElementById("board");
+const scoreEl = document.getElementById("score");
+const timeEl = document.getElementById("time");
+const bestEl = document.getElementById("best");
+const startBtn = document.getElementById("startBtn");
 const resetBtn = document.getElementById("resetBtn");
-const result = document.getElementById("result");
+const message = document.getElementById("message");
 
-function parseIngredients(value) {
-  return value
-    .split(",")
-    .map(item => item.trim())
-    .filter(Boolean);
-}
+const TOTAL_TIME = 30;
+const HOLE_COUNT = 9;
+let score = 0;
+let timeLeft = TOTAL_TIME;
+let gameRunning = false;
+let activeIndex = -1;
+let gameTimer = null;
+let moleTimer = null;
+let bestScore = Number(localStorage.getItem("mole_best_score") || 0);
+bestEl.textContent = String(bestScore);
 
-function scoreRecipe(userIngredients, recipeIngredients) {
-  const matched = recipeIngredients.filter(item => userIngredients.includes(item));
-  return {
-    matched,
-    missing: recipeIngredients.filter(item => !userIngredients.includes(item))
-  };
-}
-
-function renderRecipes(userIngredients) {
-  if (userIngredients.length === 0) {
-    result.innerHTML = '<div class="empty">재료를 한 개 이상 입력해주세요.</div>';
-    return;
+function createBoard() {
+  board.innerHTML = "";
+  for (let i = 0; i < HOLE_COUNT; i += 1) {
+    const btn = document.createElement("button");
+    btn.className = "hole";
+    btn.type = "button";
+    btn.dataset.index = String(i);
+    btn.textContent = "🕳️";
+    btn.addEventListener("click", onHoleClick);
+    board.appendChild(btn);
   }
-
-  const scored = recipes
-    .map(recipe => {
-      const score = scoreRecipe(userIngredients, recipe.ingredients);
-      return {
-        recipe,
-        ...score,
-        ratio: score.matched.length / recipe.ingredients.length
-      };
-    })
-    .filter(item => item.matched.length > 0)
-    .sort((a, b) => b.ratio - a.ratio || a.missing.length - b.missing.length)
-    .slice(0, 5);
-
-  if (scored.length === 0) {
-    result.innerHTML = '<div class="empty">일치하는 레시피가 없습니다. 다른 재료를 추가해보세요.</div>';
-    return;
-  }
-
-  result.innerHTML = scored.map(item => {
-    const { recipe, matched, missing } = item;
-    const matchedText = `보유 재료 ${matched.length}/${recipe.ingredients.length}`;
-    const missingText = missing.length ? `추가 필요: ${missing.join(", ")}` : "지금 바로 조리 가능";
-
-    return `
-      <article class="recipe">
-        <h3>${recipe.name}</h3>
-        <div class="meta">
-          <span class="tag ok">${matchedText}</span>
-          <span class="tag">${recipe.time}</span>
-          <span class="tag">난이도 ${recipe.difficulty}</span>
-        </div>
-        <p class="desc"><strong>${missingText}</strong></p>
-        <p class="desc">조리법: ${recipe.steps}</p>
-      </article>
-    `;
-  }).join("");
 }
 
-findBtn.addEventListener("click", () => {
-  const userIngredients = parseIngredients(ingredientsInput.value);
-  renderRecipes(userIngredients);
-});
+function getHoles() {
+  return Array.from(document.querySelectorAll(".hole"));
+}
 
-sampleBtn.addEventListener("click", () => {
-  ingredientsInput.value = "계란, 양파, 감자, 소금, 식용유";
-  renderRecipes(parseIngredients(ingredientsInput.value));
-});
+function setActiveHole(index) {
+  const holes = getHoles();
+  holes.forEach((hole, i) => {
+    const on = i === index;
+    hole.classList.toggle("active", on);
+    hole.textContent = on ? "🐹" : "🕳️";
+  });
+  activeIndex = index;
+}
 
-resetBtn.addEventListener("click", () => {
-  ingredientsInput.value = "";
-  result.innerHTML = '<div class="empty">재료를 입력하고 "레시피 찾기"를 눌러주세요.</div>';
-});
+function randomIndex() {
+  let idx = Math.floor(Math.random() * HOLE_COUNT);
+  while (idx === activeIndex) {
+    idx = Math.floor(Math.random() * HOLE_COUNT);
+  }
+  return idx;
+}
+
+function tickMole() {
+  if (!gameRunning) return;
+  setActiveHole(randomIndex());
+  const next = 380 + Math.floor(Math.random() * 340);
+  moleTimer = setTimeout(tickMole, next);
+}
+
+function onHoleClick(event) {
+  if (!gameRunning) return;
+  const idx = Number(event.currentTarget.dataset.index);
+  if (idx !== activeIndex) return;
+  score += 1;
+  scoreEl.textContent = String(score);
+  setActiveHole(-1);
+}
+
+function endGame() {
+  gameRunning = false;
+  clearInterval(gameTimer);
+  clearTimeout(moleTimer);
+  setActiveHole(-1);
+  if (score > bestScore) {
+    bestScore = score;
+    localStorage.setItem("mole_best_score", String(bestScore));
+    bestEl.textContent = String(bestScore);
+    message.textContent = `게임 종료. 새 최고 점수 ${bestScore}점!`;
+  } else {
+    message.textContent = `게임 종료. 이번 점수는 ${score}점입니다.`;
+  }
+  startBtn.disabled = false;
+}
+
+function startGame() {
+  if (gameRunning) return;
+  gameRunning = true;
+  score = 0;
+  timeLeft = TOTAL_TIME;
+  scoreEl.textContent = "0";
+  timeEl.textContent = String(TOTAL_TIME);
+  message.textContent = "두더지를 클릭해서 점수를 올리세요!";
+  startBtn.disabled = true;
+  tickMole();
+  gameTimer = setInterval(() => {
+    timeLeft -= 1;
+    timeEl.textContent = String(timeLeft);
+    if (timeLeft <= 0) endGame();
+  }, 1000);
+}
+
+function resetBest() {
+  bestScore = 0;
+  localStorage.removeItem("mole_best_score");
+  bestEl.textContent = "0";
+  message.textContent = "최고 점수를 초기화했습니다.";
+}
+
+startBtn.addEventListener("click", startGame);
+resetBtn.addEventListener("click", resetBest);
+
+createBoard();
 </script>
 </body>
 </html>
