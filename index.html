@@ -12,6 +12,7 @@
   --ink: #0f172a;
   --accent: #f97316;
   --accent-2: #06b6d4;
+  --line: #d7dde7;
 }
 * { box-sizing: border-box; }
 body {
@@ -34,14 +35,8 @@ body {
   padding: 20px;
   box-shadow: 0 20px 45px rgba(2, 8, 23, 0.45);
 }
-h1 {
-  margin: 0;
-  font-size: 30px;
-}
-.sub {
-  margin: 8px 0 16px;
-  color: #475569;
-}
+h1 { margin: 0; font-size: 30px; }
+.sub { margin: 8px 0 16px; color: #475569; }
 .top {
   display: flex;
   flex-wrap: wrap;
@@ -50,21 +45,14 @@ h1 {
   justify-content: space-between;
   margin-bottom: 14px;
 }
-.stats {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.stats { display: flex; gap: 8px; flex-wrap: wrap; }
 .badge {
   background: #e2e8f0;
   border-radius: 999px;
   padding: 7px 12px;
   font-weight: 700;
 }
-.controls {
-  display: flex;
-  gap: 8px;
-}
+.controls { display: flex; gap: 8px; flex-wrap: wrap; }
 button {
   border: 0;
   border-radius: 999px;
@@ -72,14 +60,9 @@ button {
   font-weight: 700;
   cursor: pointer;
 }
-#startBtn {
-  background: var(--accent);
-  color: white;
-}
-#resetBtn {
-  background: #cbd5e1;
-  color: #0f172a;
-}
+#startBtn { background: var(--accent); color: white; }
+#resetBtn { background: #cbd5e1; color: #0f172a; }
+#contactBtn { background: var(--accent-2); color: #082f49; }
 .board {
   margin-top: 10px;
   display: grid;
@@ -107,8 +90,50 @@ button {
   color: #334155;
   font-size: 14px;
 }
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.58);
+  padding: 18px;
+}
+.modal.show { display: grid; }
+.modal-card {
+  width: min(620px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  padding: 18px;
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.modal-head h2 { margin: 0; font-size: 24px; }
+.close-btn {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.form-grid { display: grid; gap: 10px; }
+label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+input, textarea {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+textarea { min-height: 120px; resize: vertical; }
+.submit-btn {
+  background: #ad4e2b;
+  color: #fff;
+}
 @media (max-width: 560px) {
   h1 { font-size: 24px; }
+  .modal-head h2 { font-size: 20px; }
 }
 </style>
 </head>
@@ -124,14 +149,44 @@ button {
       <span class="badge">최고 점수: <strong id="best">0</strong></span>
     </div>
     <div class="controls">
-      <button id="startBtn">시작</button>
-      <button id="resetBtn">기록 초기화</button>
+      <button id="startBtn" type="button">시작</button>
+      <button id="resetBtn" type="button">기록 초기화</button>
+      <button id="contactBtn" type="button">제휴 문의</button>
     </div>
   </section>
 
   <section class="board" id="board"></section>
   <p class="note" id="message">시작 버튼을 누르면 게임이 시작됩니다.</p>
 </main>
+
+<section class="modal" id="contactModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>제휴 문의</h2>
+      <button class="close-btn" id="closeModalBtn" type="button">닫기</button>
+    </div>
+    <form action="https://formspree.io/f/xrealdzz" method="POST" class="form-grid">
+      <label>
+        이름
+        <input type="text" name="name" required />
+      </label>
+      <label>
+        회사명
+        <input type="text" name="company" required />
+      </label>
+      <label>
+        이메일
+        <input type="email" name="email" required />
+      </label>
+      <label>
+        문의 내용
+        <textarea name="message" required></textarea>
+      </label>
+      <input type="hidden" name="subject" value="[웹사이트] 제휴 문의 접수" />
+      <button class="submit-btn" type="submit">문의 보내기</button>
+    </form>
+  </div>
+</section>
 
 <script>
 const board = document.getElementById("board");
@@ -140,6 +195,9 @@ const timeEl = document.getElementById("time");
 const bestEl = document.getElementById("best");
 const startBtn = document.getElementById("startBtn");
 const resetBtn = document.getElementById("resetBtn");
+const contactBtn = document.getElementById("contactBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const contactModal = document.getElementById("contactModal");
 const message = document.getElementById("message");
 
 const TOTAL_TIME = 30;
@@ -182,9 +240,7 @@ function setActiveHole(index) {
 
 function randomIndex() {
   let idx = Math.floor(Math.random() * HOLE_COUNT);
-  while (idx === activeIndex) {
-    idx = Math.floor(Math.random() * HOLE_COUNT);
-  }
+  while (idx === activeIndex) idx = Math.floor(Math.random() * HOLE_COUNT);
   return idx;
 }
 
@@ -244,8 +300,26 @@ function resetBest() {
   message.textContent = "최고 점수를 초기화했습니다.";
 }
 
+function openModal() {
+  contactModal.classList.add("show");
+  contactModal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal() {
+  contactModal.classList.remove("show");
+  contactModal.setAttribute("aria-hidden", "true");
+}
+
 startBtn.addEventListener("click", startGame);
 resetBtn.addEventListener("click", resetBest);
+contactBtn.addEventListener("click", openModal);
+closeModalBtn.addEventListener("click", closeModal);
+contactModal.addEventListener("click", (event) => {
+  if (event.target === contactModal) closeModal();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeModal();
+});
 
 createBoard();
 </script>
